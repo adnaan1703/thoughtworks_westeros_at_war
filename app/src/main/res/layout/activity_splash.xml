@@ -1,31 +1,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     tools:context="com.example.adaanahmed.westerosatwar.splash_screen.SplashActivity">
 
     <ProgressBar
         android:id="@+id/splash_progressbar"
-        android:layout_marginBottom="@dimen/margin_16"
-        android:layout_marginStart="@dimen/margin_32"
-        android:layout_marginEnd="@dimen/margin_32"
-        android:layout_marginTop="@dimen/margin_16"
-        android:indeterminate="true"
         style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_marginBottom="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_32"
+        android:layout_marginStart="@dimen/margin_32"
+        android:layout_marginTop="@dimen/margin_16"
+        android:indeterminate="true" />
 
-    <TextView
+    <com.example.adaanahmed.westerosatwar.UIWidget.ProximaTextView
         android:id="@+id/splash_text"
-        android:maxLines="1"
-        android:textColor="@color/textColorPrimary"
-        android:layout_centerHorizontal="true"
-        android:text="@string/loading_data"
-        android:layout_above="@id/splash_progressbar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_above="@id/splash_progressbar"
+        android:layout_centerHorizontal="true"
+        android:maxLines="1"
+        android:text="@string/loading_data"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="14sp"
+        app:proxima_font="proxima_regular" />
 
 </RelativeLayout>

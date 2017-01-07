@@ -3,7 +3,11 @@ package com.example.adaanahmed.westerosatwar.splash_screen;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
+import com.example.adaanahmed.westerosatwar.R;
+import com.example.adaanahmed.westerosatwar.UIWidget.ProximaTextView;
 import com.example.adaanahmed.westerosatwar.base.BaseActivity;
 import com.example.adaanahmed.westerosatwar.network.ResponseModel;
 
@@ -11,21 +15,26 @@ import java.util.ArrayList;
 
 public class SplashActivity extends BaseActivity implements SplashScreenContract.View {
 
-    SplashScreenContract.Presenter presenter;
+    private SplashScreenContract.Presenter presenter;
+    private ProgressBar progressBar;
+    private ProximaTextView proximaTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
         android.view.View decorView = getWindow().getDecorView();
         int decorFlags = android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE | android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | android.view.View.SYSTEM_UI_FLAG_FULLSCREEN | android.view.View.SYSTEM_UI_FLAG_IMMERSIVE;
 
-        if(null != decorView) {
+        if (null != decorView) {
             decorView.setSystemUiVisibility(decorFlags);
         }
 
         presenter = new SplashScreenPresenter(this);
+        progressBar = (ProgressBar) findViewById(R.id.splash_progressbar);
+        proximaTextView = (ProximaTextView) findViewById(R.id.splash_text);
     }
 
     @Override
@@ -47,12 +56,8 @@ public class SplashActivity extends BaseActivity implements SplashScreenContract
     }
 
     @Override
-    public void showIndicator() {
-
-    }
-
-    @Override
     public void setDataSuccess(ArrayList<ResponseModel> responseModels) {
+//        presenter.navigateToHomeScreen();
         showToast(responseModels.get(0).toString());
     }
 
@@ -60,6 +65,8 @@ public class SplashActivity extends BaseActivity implements SplashScreenContract
     public void setDataFailure(String string) {
         Log.e(this.getClass().getName(), string);
         showToast(string);
+        progressBar.setVisibility(View.INVISIBLE);
+        proximaTextView.setText(R.string.check_internet);
     }
 
     @Override

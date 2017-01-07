@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="proxima_font" format="enum">
+        <enum name="proxima_bold" value="0" />
+        <enum name="proxima_regular" value="1" />
+    </attr>
+
+    <declare-styleable name="ProximaTextView">
+        <attr name="proxima_font"/>
+    </declare-styleable>
+
+
+    <!-- styles -->
+
+    <style name="proxima_bold">proxima_bold</style>
+    <style name="proxima_regular">proxima_regular</style>
+
+</resources>

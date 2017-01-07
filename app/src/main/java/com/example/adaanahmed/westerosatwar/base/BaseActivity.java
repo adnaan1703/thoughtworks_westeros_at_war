@@ -20,8 +20,17 @@ public abstract class BaseActivity extends AppCompatActivity {
         handleIntent();
     }
 
+    protected void showToast(String string, boolean isLong) {
+        int durations = Toast.LENGTH_SHORT;
+        if (isLong) {
+            durations = Toast.LENGTH_LONG;
+        }
+
+        Toast.makeText(getApplicationContext(), string, durations).show();
+    }
+
     protected void showToast(String string) {
-        Toast.makeText(getApplicationContext(), string, Toast.LENGTH_SHORT).show();
+        showToast(string, false);
     }
 
     protected abstract void handleIntent();

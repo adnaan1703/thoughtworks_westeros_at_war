@@ -19,7 +19,6 @@ class SplashScreenContract {
     }
 
     interface View extends BaseView {
-        void showIndicator();
         void setDataSuccess(ArrayList<ResponseModel> responseModels);
         void setDataFailure(String string);
     }
