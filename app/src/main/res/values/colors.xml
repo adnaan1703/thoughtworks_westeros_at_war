@@ -8,5 +8,8 @@
     <color name="white_87">#DEDEDE</color>
     <color name="divider">#E0E0E0</color>
 
+    <color name="textColorPrimary">@color/white_87</color>
+    <color name="textColorSecondary">@color/white_54</color>
+
     <color name="black_overlay">#66000000</color>
 </resources>
