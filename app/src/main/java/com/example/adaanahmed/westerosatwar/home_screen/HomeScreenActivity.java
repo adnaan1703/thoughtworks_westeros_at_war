@@ -47,7 +47,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenContra
         searchButton.setOnClickListener(this);
         filterButton.setOnClickListener(this);
         homeButton.setOnClickListener(this);
-        adapter = new HomeScreenListAdapter(this);
+        adapter = new HomeScreenListAdapter(this, presenter.getTotalCount());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -114,7 +114,17 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenContra
     }
 
     @Override
+    public void loadMore() {
+        presenter.fetchData();
+    }
+
+    @Override
     public void updateList(ArrayList<King> kings, boolean isComplete) {
         adapter.addData(kings);
+        if (isComplete) {
+            adapter.removeFooter();
+        } else {
+            adapter.addFooter();
+        }
     }
 }

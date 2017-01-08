@@ -8,4 +8,5 @@
     <string name="processing_data">Processing data…</string>
     <string name="battle_strength">Battle Strength: %s</string>
     <string name="rating">Rating: %d</string>
+    <string name="total">Total: %d Kings</string>
 </resources>

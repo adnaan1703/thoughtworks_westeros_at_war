@@ -27,7 +27,7 @@ class HomeScreenPresenter implements HomeScreenContract.Presenter {
         @Override
         public void onChange(RealmResults<King> element) {
             results = element;
-            fetchData(counter);
+            fetchData();
         }
     };
 
@@ -49,17 +49,18 @@ class HomeScreenPresenter implements HomeScreenContract.Presenter {
     }
 
     @Override
-    public void fetchData(int index) {
+    public void fetchData() {
         ArrayList<King> data = new ArrayList<>();
-        for (int position = index; position < index + ROW_ITEMS_COUNT && position < results.size(); position++) {
+        for (int position = counter; position < counter + ROW_ITEMS_COUNT && position < results.size(); position++) {
             data.add(results.get(position));
         }
 
-        if (index + ROW_ITEMS_COUNT >= results.size()) {
+        if (counter + ROW_ITEMS_COUNT >= results.size()) {
             counter = results.size();
+            view.get().updateList(data, true);
+        } else {
+            view.get().updateList(data, false);
         }
-
-        view.get().updateList(data, false);
     }
 
     @Override
@@ -75,5 +76,10 @@ class HomeScreenPresenter implements HomeScreenContract.Presenter {
     @Override
     public void startKingProfileActivity(King king) {
 
+    }
+
+    @Override
+    public int getTotalCount() {
+        return (int) Realm.getDefaultInstance().where(King.class).count();
     }
 }

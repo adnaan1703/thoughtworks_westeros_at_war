@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.example.adaanahmed.westerosatwar.R;
 import com.example.adaanahmed.westerosatwar.UIWidget.ProximaTextView;
@@ -27,15 +28,22 @@ class HomeScreenListAdapter extends RecyclerView.Adapter<HomeScreenListAdapter.V
 
     private static final int DUMMY = 0;
     private static final int ACTUAL = 1;
+    private static final int FOOTER = 2;
+
+    private static final String DUMMY_STRING = "dummy";
+    private static final String FOOTER_STRING = "footer";
+
 
     private ArrayList<King> kings = new ArrayList<>();
     private HomeScreenListingCallbacks homeScreenListingCallbacks;
+    private int totalCount = 0;
 
-    HomeScreenListAdapter(HomeScreenListingCallbacks homeScreenListingCallbacks) {
+    HomeScreenListAdapter(HomeScreenListingCallbacks homeScreenListingCallbacks, int totalCount) {
         this.homeScreenListingCallbacks = homeScreenListingCallbacks;
+        this.totalCount = totalCount;
         this.kings.clear();
         King dummy = new King();
-        dummy.setName("dummy");
+        dummy.setName(DUMMY_STRING);
         this.kings.add(dummy);
     }
 
@@ -51,6 +59,10 @@ class HomeScreenListAdapter extends RecyclerView.Adapter<HomeScreenListAdapter.V
                 view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.home_screen_list_item_layout, parent, false);
                 return new ActualViewHolder(view);
+            case FOOTER:
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.home_screen_list_item_footer_item_layout, parent, false);
+                return new FooterViewHolder(view);
             default:
                 Log.d(this.getClass().getName(), "unmatched view type");
                 return null;
@@ -69,23 +81,51 @@ class HomeScreenListAdapter extends RecyclerView.Adapter<HomeScreenListAdapter.V
 
     @Override
     public int getItemViewType(int position) {
-        if (kings.get(position).getName().equalsIgnoreCase("dummy")) {
+        if (kings.get(position).getName().equalsIgnoreCase(DUMMY_STRING)) {
             return DUMMY;
+        } else if (kings.get(position).getName().equalsIgnoreCase(FOOTER_STRING)) {
+            return FOOTER;
         } else {
             return ACTUAL;
         }
     }
 
     void addData(ArrayList<King> data) {
+        removeFooter();
         int oldSize = kings.size();
         kings.addAll(data);
         notifyItemRangeInserted(oldSize, data.size());
     }
 
+    void addFooter() {
+
+        for (King king : kings) {
+            if (king.getName().equalsIgnoreCase(FOOTER_STRING))
+                return;
+        }
+
+        King king = new King();
+        king.setName(FOOTER_STRING);
+        kings.add(king);
+        notifyItemInserted(kings.size() - 1);
+
+    }
+
+    void removeFooter() {
+
+        for (int position = 0; position < kings.size(); position++) {
+            if (kings.get(position).getName().equalsIgnoreCase(FOOTER_STRING)) {
+                kings.remove(position);
+                notifyItemRemoved(position);
+                return;
+            }
+        }
+    }
+
     void clearData() {
         kings.clear();
         King dummy = new King();
-        dummy.setName("dummy");
+        dummy.setName(DUMMY_STRING);
         this.kings.add(dummy);
     }
 
@@ -100,13 +140,16 @@ class HomeScreenListAdapter extends RecyclerView.Adapter<HomeScreenListAdapter.V
 
     private class DummyViewHolder extends ViewHolder {
 
+        ProximaTextView subtitle;
+
         DummyViewHolder(View itemView) {
             super(itemView);
+            subtitle = (ProximaTextView) itemView.findViewById(R.id.home_screen_list_item_dummy_subtitle);
         }
 
         @Override
         void updateView(King king) {
-
+            subtitle.setText(itemView.getContext().getString(R.string.total, totalCount));
         }
     }
 
@@ -142,7 +185,25 @@ class HomeScreenListAdapter extends RecyclerView.Adapter<HomeScreenListAdapter.V
         }
     }
 
+    private class FooterViewHolder extends ViewHolder {
+
+        private ProgressBar progressBar;
+
+        FooterViewHolder(View itemView) {
+            super(itemView);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.home_screen_list_item_footer_progress_bar);
+        }
+
+        @Override
+        void updateView(King king) {
+            progressBar.setVisibility(View.VISIBLE);
+            homeScreenListingCallbacks.loadMore();
+        }
+    }
+
     interface HomeScreenListingCallbacks {
         void onKingsItemClick(King king);
+
+        void loadMore();
     }
 }

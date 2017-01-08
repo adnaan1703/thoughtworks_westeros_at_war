@@ -1,6 +1,7 @@
 package com.example.adaanahmed.westerosatwar.splash_screen;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.example.adaanahmed.westerosatwar.dbUtil.models.Battle;
 import com.example.adaanahmed.westerosatwar.dbUtil.models.King;
@@ -29,7 +30,6 @@ class SplashScreenPresenter implements SplashScreenContract.Presenter, Callback<
 
     private WeakReference<SplashScreenContract.View> view;
     private boolean wasLoadSuccessful;
-    long count1, count2;
 
     SplashScreenPresenter(@NonNull SplashScreenContract.View view) {
         this.view = new WeakReference<>(view);
@@ -81,15 +81,11 @@ class SplashScreenPresenter implements SplashScreenContract.Presenter, Callback<
                     Battle battle = insertBattleDocument(response, realm);
                     insertUpdateKingDocument(response, battle, realm);
                 }
-
-                count1 = realm.where(King.class).count();
-                count2 = realm.where(Battle.class).count();
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
             public void onSuccess() {
                 view.get().onDataStoreSuccess();
-                view.get().onDataStoreFailure(" kings -> " + count1 + " battles -> " + count2);
             }
         }, new Realm.Transaction.OnError() {
             @Override
@@ -100,20 +96,38 @@ class SplashScreenPresenter implements SplashScreenContract.Presenter, Callback<
     }
 
     private void insertUpdateKingDocument(ResponseModel response, Battle battle, Realm realm) {
-        King king = realm.where(King.class).equalTo("name", response.getAttackerKing()).findFirst();
-        if (king == null) {
-            king = realm.createObject(King.class, response.getAttackerKing());
+
+        if (!TextUtils.isEmpty(response.getAttackerKing())) {
+            King attackingKing = realm.where(King.class).equalTo("name", response.getAttackerKing()).findFirst();
+            if (attackingKing == null) {
+                attackingKing = realm.createObject(King.class, response.getAttackerKing());
+            }
+
+            attackingKing.setStrength("none");
+            attackingKing.setBattleType("none");
+
+            if (response.getAttackerOutcome().equalsIgnoreCase("win")) {
+                attackingKing.getBattlesWon().add(battle);
+            } else {
+                attackingKing.getBattlesLost().add(battle);
+            }
         }
 
-        king.setStrength("none");
-        king.setBattleType("none");
+        if (!TextUtils.isEmpty(response.getDefenderKing())) {
+            King defendingKing = realm.where(King.class).equalTo("name", response.getDefenderKing()).findFirst();
+            if (defendingKing == null) {
+                defendingKing = realm.createObject(King.class, response.getDefenderKing());
+            }
 
-        if (response.getAttackerOutcome().equalsIgnoreCase("win")) {
-            king.getBattlesWon().add(battle);
-        } else {
-            king.getBattlesLost().add(battle);
+            defendingKing.setStrength("none");
+            defendingKing.setBattleType("none");
+
+            if (response.getAttackerOutcome().equalsIgnoreCase("win")) {
+                defendingKing.getBattlesLost().add(battle);
+            } else {
+                defendingKing.getBattlesWon().add(battle);
+            }
         }
-
     }
 
     private Battle insertBattleDocument(@NonNull final ResponseModel response, Realm realm) {

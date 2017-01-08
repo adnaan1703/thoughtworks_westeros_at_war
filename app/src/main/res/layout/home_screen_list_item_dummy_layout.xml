@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
-    android:orientation="vertical" />
+    android:orientation="vertical"
+    android:padding="@dimen/margin_16">
+
+    <com.example.adaanahmed.westerosatwar.UIWidget.ProximaTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/app_name"
+        android:textColor="@color/white_87"
+        android:textSize="24sp"
+        app:proxima_font="proxima_bold" />
+
+    <com.example.adaanahmed.westerosatwar.UIWidget.ProximaTextView
+        android:id="@+id/home_screen_list_item_dummy_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/white_54"
+        android:textSize="14sp"
+        app:proxima_font="proxima_regular"
+        tools:text="Total: 5 Kings" />
+
+</LinearLayout>
 

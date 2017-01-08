@@ -18,18 +18,19 @@ class HomeScreenContract {
     interface Presenter extends BasePresenter {
         int ROW_ITEMS_COUNT = 10;
 
-        void fetchData(int index);
+        void fetchData();
 
         void startSearchFragment();
 
         void startFilterFragment();
 
         void startKingProfileActivity(King king);
+
+        int getTotalCount();
     }
 
     interface View extends BaseView {
 
         void updateList(ArrayList<King> kings, boolean isComplete);
-
     }
 }
