@@ -1,6 +1,7 @@
 package com.example.adaanahmed.westerosatwar.home_screen;
 
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.example.adaanahmed.westerosatwar.dbUtil.models.King;
 import com.example.adaanahmed.westerosatwar.router.TwRouter;
@@ -88,7 +89,10 @@ class HomeScreenPresenter implements HomeScreenContract.Presenter {
 
     @Override
     public void startFilterFragment() {
-
+        if (view.get() != null) {
+            Toast.makeText(view.get().getContext().getApplicationContext(), "Sorry couldn't add the filter" +
+                    " feature due to lack of time.", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
