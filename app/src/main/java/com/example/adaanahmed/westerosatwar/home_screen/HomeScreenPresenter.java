@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Author  : Adnaan 'Zohran' Ahmed
@@ -63,6 +64,7 @@ class HomeScreenPresenter implements HomeScreenContract.Presenter {
     @Override
     public void fetchData() {
         ArrayList<King> data = new ArrayList<>();
+        results = results.sort("rating", Sort.DESCENDING);
         for (int position = counter; position < counter + ROW_ITEMS_COUNT && position < results.size(); position++) {
             data.add(results.get(position));
         }
@@ -78,8 +80,10 @@ class HomeScreenPresenter implements HomeScreenContract.Presenter {
     }
 
     @Override
-    public void startSearchFragment() {
-
+    public void startSearchActivity() {
+        if (view.get() != null) {
+            TwRouter.startSearchScreenActivity(view.get().getContext());
+        }
     }
 
     @Override

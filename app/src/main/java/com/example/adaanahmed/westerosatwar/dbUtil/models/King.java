@@ -13,12 +13,22 @@ import io.realm.annotations.PrimaryKey;
 
 public class King extends RealmObject {
 
+    private int id;
     private long rating = 400;
-    @PrimaryKey private String name;
+    @PrimaryKey
+    private String name;
     private String strength;
     private String battleType;
     private RealmList<Battle> battlesWon = new RealmList<>();
     private RealmList<Battle> battlesLost = new RealmList<>();
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public long getRating() {
         return rating;

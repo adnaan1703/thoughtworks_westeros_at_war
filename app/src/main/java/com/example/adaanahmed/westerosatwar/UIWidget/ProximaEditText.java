@@ -4,10 +4,11 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 
 import com.example.adaanahmed.westerosatwar.R;
+
 
 /**
  * Author  : Adnaan 'Zohran' Ahmed
@@ -16,27 +17,27 @@ import com.example.adaanahmed.westerosatwar.R;
  */
 
 
-public class ProximaTextView extends AppCompatTextView implements fontWidget{
+public class ProximaEditText extends AppCompatEditText implements fontWidget{
 
-    public ProximaTextView(Context context) {
+    public ProximaEditText(Context context) {
         super(context);
         init(null);
     }
 
-    public ProximaTextView(Context context, AttributeSet attrs) {
+    public ProximaEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
-    public ProximaTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ProximaEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
 
     private void init(AttributeSet attrs) {
         Resources.Theme theme = getContext().getTheme();
-        TypedArray a = theme.obtainStyledAttributes(attrs, R.styleable.ProximaTextView, 0, 0);
-        int fontIndex = a.getInt(R.styleable.ProximaTextView_proxima_font, 0);
+        TypedArray a = theme.obtainStyledAttributes(attrs, R.styleable.ProximaEditText, 0, 0);
+        int fontIndex = a.getInt(R.styleable.ProximaEditText_proxima_font, 0);
         a.recycle();
         setFont(fontIndex);
     }
@@ -52,6 +53,4 @@ public class ProximaTextView extends AppCompatTextView implements fontWidget{
         Typeface assetFont = Typeface.createFromAsset(getContext().getAssets(), fontName);
         setTypeface(assetFont);
     }
-
-
 }

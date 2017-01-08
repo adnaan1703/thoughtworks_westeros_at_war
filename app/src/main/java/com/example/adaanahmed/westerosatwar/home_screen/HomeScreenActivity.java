@@ -110,7 +110,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenContra
                 break;
             case R.id.toolbar_search:
                 if (null != presenter) {
-                    presenter.startSearchFragment();
+                    presenter.startSearchActivity();
                 }
                 break;
             case R.id.toolbar_filter:

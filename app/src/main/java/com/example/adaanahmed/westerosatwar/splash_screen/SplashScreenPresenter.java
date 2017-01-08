@@ -1,6 +1,8 @@
 package com.example.adaanahmed.westerosatwar.splash_screen;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.util.SimpleArrayMap;
 import android.text.TextUtils;
 
 import com.example.adaanahmed.westerosatwar.dbUtil.models.Battle;
@@ -9,11 +11,13 @@ import com.example.adaanahmed.westerosatwar.network.ResponseModel;
 import com.example.adaanahmed.westerosatwar.network.ServiceGenerator;
 import com.example.adaanahmed.westerosatwar.router.TwRouter;
 import com.example.adaanahmed.westerosatwar.router.models.HomeScreenRouterModel;
+import com.example.adaanahmed.westerosatwar.utils.IdGenerator;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -99,6 +103,7 @@ class SplashScreenPresenter implements SplashScreenContract.Presenter, Callback<
 
                     Battle battle = insertBattleDocument(response, realm);
                     insertUpdateKingDocument(response, battle, realm);
+                    updateBattleDatasOfKings(realm);
                 }
             }
         }, new Realm.Transaction.OnSuccess() {
@@ -116,39 +121,109 @@ class SplashScreenPresenter implements SplashScreenContract.Presenter, Callback<
         });
     }
 
+    private void updateBattleDatasOfKings(Realm realm) {
+        RealmResults<King> results = realm.where(King.class).findAll();
+        for (int i = 0; i < results.size(); i++) {
+            King king = results.get(i);
+            king.setId(IdGenerator.generateId());
+            int attackCount = 0, defenceCount = 0;
+            String battleType = "none";
+            int maxBattleTypeCount = 0;
+
+
+            for (int j = 0; j < king.getBattlesWon().size(); j++) {
+                Battle battle = king.getBattlesWon().get(j);
+                if (battle.getAttackerKing().equalsIgnoreCase(king.getName())) {
+                    attackCount++;
+                } else {
+                    defenceCount++;
+                }
+
+                int battleTypeCount = 0;
+                for (int k = j + 1; k < king.getBattlesWon().size(); k++) {
+                    if (king.getBattlesWon().get(k).getBattleType().equalsIgnoreCase(battle.getBattleType()))
+                        battleTypeCount++;
+                }
+
+                if (battleTypeCount > maxBattleTypeCount) {
+                    battleType = battle.getBattleType();
+                    maxBattleTypeCount = battleTypeCount;
+                }
+            }
+
+            if (attackCount > defenceCount) {
+                king.setStrength("Attack");
+            } else if (attackCount < defenceCount) {
+                king.setStrength("Defence");
+            } else {
+                king.setStrength("Balanced");
+            }
+            king.setBattleType(battleType);
+        }
+    }
+
     private void insertUpdateKingDocument(ResponseModel response, Battle battle, Realm realm) {
 
-        if (!TextUtils.isEmpty(response.getAttackerKing())) {
-            King attackingKing = realm.where(King.class).equalTo("name", response.getAttackerKing()).findFirst();
-            if (attackingKing == null) {
-                attackingKing = realm.createObject(King.class, response.getAttackerKing());
-            }
+        boolean shouldComputeRating1 = true, shouldComputeRating2 = true;
 
-            attackingKing.setStrength("none");
-            attackingKing.setBattleType("none");
-
-            if (response.getAttackerOutcome().equalsIgnoreCase("win")) {
-                attackingKing.getBattlesWon().add(battle);
-            } else {
-                attackingKing.getBattlesLost().add(battle);
-            }
+        King attackingKing = realm.where(King.class).equalTo("name", response.getAttackerKing()).findFirst();
+        if (attackingKing == null) {
+            attackingKing = realm.createObject(King.class, response.getAttackerKing());
+            shouldComputeRating1 = false;
         }
 
-        if (!TextUtils.isEmpty(response.getDefenderKing())) {
-            King defendingKing = realm.where(King.class).equalTo("name", response.getDefenderKing()).findFirst();
-            if (defendingKing == null) {
-                defendingKing = realm.createObject(King.class, response.getDefenderKing());
-            }
 
-            defendingKing.setStrength("none");
-            defendingKing.setBattleType("none");
+        attackingKing.setStrength("none");
+        attackingKing.setBattleType("none");
 
-            if (response.getAttackerOutcome().equalsIgnoreCase("win")) {
-                defendingKing.getBattlesLost().add(battle);
-            } else {
-                defendingKing.getBattlesWon().add(battle);
-            }
+        if (response.getAttackerOutcome().equalsIgnoreCase("win")) {
+            attackingKing.getBattlesWon().add(battle);
+        } else {
+            attackingKing.getBattlesLost().add(battle);
         }
+
+        King defendingKing = realm.where(King.class).equalTo("name", response.getDefenderKing()).findFirst();
+        if (defendingKing == null) {
+            defendingKing = realm.createObject(King.class, response.getDefenderKing());
+            shouldComputeRating2 = false;
+        }
+
+        defendingKing.setStrength("none");
+        defendingKing.setBattleType("none");
+
+        if (response.getAttackerOutcome().equalsIgnoreCase("win")) {
+            defendingKing.getBattlesLost().add(battle);
+        } else {
+            defendingKing.getBattlesWon().add(battle);
+        }
+
+        double flag = 0.5;
+        if (battle.getAttackerOutcome().equalsIgnoreCase("win"))
+            flag = 1;
+        else if (battle.getAttackerOutcome().equalsIgnoreCase("loss"))
+            flag = 0;
+
+        long r1 = attackingKing.getRating();
+        long r2 = defendingKing.getRating();
+
+        if (shouldComputeRating1)
+            attackingKing.setRating(computeRating(r1, r2, flag));
+
+        if (shouldComputeRating2)
+            defendingKing.setRating(computeRating(r2, r1, 1.0 - flag));
+    }
+
+    private long computeRating(long r1, long r2, double s1) {
+        double k = 32.0;
+
+        double R1 = Math.pow(10, r1 / 400);
+        double R2 = Math.pow(10, r2 / 400);
+
+        double e1 = R1 / (R1 + R2);
+
+        double nr1 = r1 + k * (s1 - e1);
+        return (long) Math.abs(nr1);
+
     }
 
     private Battle insertBattleDocument(@NonNull final ResponseModel response, Realm realm) {
@@ -164,6 +239,7 @@ class SplashScreenPresenter implements SplashScreenContract.Presenter, Callback<
         battle.setDefenderKing(response.getDefenderKing());
         battle.setBattleType(response.getBattleType());
         battle.setRegion(response.getRegion());
+        battle.setAttackerOutcome(response.getAttackerOutcome());
         return battle;
     }
 }

@@ -10,6 +10,11 @@
     </declare-styleable>
 
 
+    <declare-styleable name="ProximaEditText">
+        <attr name="proxima_font"/>
+    </declare-styleable>
+
+
     <!-- styles -->
 
     <style name="proxima_bold">proxima_bold</style>

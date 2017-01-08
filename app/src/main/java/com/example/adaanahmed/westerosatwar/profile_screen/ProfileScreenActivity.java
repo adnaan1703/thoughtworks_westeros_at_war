@@ -38,6 +38,7 @@ public class ProfileScreenActivity extends BaseActivity implements ProfileScreen
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -47,6 +48,7 @@ public class ProfileScreenActivity extends BaseActivity implements ProfileScreen
                 } else {
                     toolbarTitle.setVisibility(View.INVISIBLE);
                 }
+
             }
         });
         if (model != null)
@@ -82,6 +84,11 @@ public class ProfileScreenActivity extends BaseActivity implements ProfileScreen
     @Override
     public void setData(ArrayList<ProfileScreenListModel> profileScreenListModels) {
         adapter.swapData(profileScreenListModels);
+    }
+
+    @Override
+    public void setTitle(String title) {
+        toolbarTitle.setText(title);
     }
 
     @Override

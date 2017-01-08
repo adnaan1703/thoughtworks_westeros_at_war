@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_search_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:padding="@dimen/margin_16"
+    tools:context="com.example.adaanahmed.westerosatwar.search_screen.SearchScreenActivity">
+
+    <ImageView
+        android:id="@+id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="2dp"
+        android:background="?attr/selectableItemBackground"
+        android:src="@drawable/ic_search"
+        tools:ignore="ContentDescription" />
+
+    <com.example.adaanahmed.westerosatwar.UIWidget.ProximaEditText
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:layout_toStartOf="@id/search_button"
+        android:hint="@string/search_name"
+        android:inputType="textNoSuggestions|textPersonName"
+        android:maxLines="2"
+        android:textColor="@color/white_87"
+        android:textColorHint="@color/white_54"
+        android:textSize="18sp"
+        app:proxima_font="proxima_regular" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_bar"
+        android:layout_marginTop="32dp" />
+</RelativeLayout>

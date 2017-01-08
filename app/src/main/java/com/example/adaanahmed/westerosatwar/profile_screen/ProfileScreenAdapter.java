@@ -8,12 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.adaanahmed.westerosatwar.ProfileImageMapper;
+import com.example.adaanahmed.westerosatwar.utils.ProfileImageMapper;
 import com.example.adaanahmed.westerosatwar.R;
 import com.example.adaanahmed.westerosatwar.UIWidget.ProximaTextView;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Author  : Adnaan 'Zohran' Ahmed
@@ -88,7 +87,6 @@ class ProfileScreenAdapter extends RecyclerView.Adapter<ProfileScreenAdapter.Vie
 
         private ImageView imageView;
         private ProximaTextView title, subtitle, strength, battleStrength;
-        private Random random = new Random();
 
 
         HeaderViewHolder(View itemView) {
@@ -103,7 +101,7 @@ class ProfileScreenAdapter extends RecyclerView.Adapter<ProfileScreenAdapter.Vie
         @Override
         void updateView(ProfileScreenListModel profileScreenListModel) {
             Context context = itemView.getContext();
-            int imageId = context.getResources().getIdentifier(PROFILE_PHOTOS[random.nextInt(50)],
+            int imageId = context.getResources().getIdentifier(PROFILE_PHOTOS[profileScreenListModel.getKingId()],
                     "drawable", context.getPackageName());
             imageView.setImageDrawable(ContextCompat.getDrawable(context, imageId));
             title.setText(profileScreenListModel.getKingName());

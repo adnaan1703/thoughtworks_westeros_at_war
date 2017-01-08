@@ -34,8 +34,10 @@ class ProfileScreenPresenter implements ProfileScreenContract.Presenter {
                 .where(King.class)
                 .equalTo("name", kingName)
                 .findFirst();
-        if (null != view.get())
+        if (null != view.get()) {
+            view.get().setTitle(king.getName());
             view.get().setData(generateDisplayModel(king));
+        }
     }
 
     private ArrayList<ProfileScreenListModel> generateDisplayModel(King king) {
@@ -44,6 +46,7 @@ class ProfileScreenPresenter implements ProfileScreenContract.Presenter {
         model.setType(ProfileScreenListModel.HEADER);
         model.setKingName(king.getName());
         model.setRating(king.getRating());
+        model.setKingId(king.getId());
         model.setStrength(king.getStrength());
         model.setBattleStrength(king.getBattleType());
         models.add(model);

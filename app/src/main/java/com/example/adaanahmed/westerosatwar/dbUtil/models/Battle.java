@@ -18,6 +18,7 @@ public class Battle extends RealmObject {
     private String attackerKing;
     private String defenderKing;
     private String battleType;
+    private String attackerOutcome;
     private String region;
 
     public long getYear() {
@@ -58,6 +59,14 @@ public class Battle extends RealmObject {
 
     public void setBattleType(String battleType) {
         this.battleType = battleType;
+    }
+
+    public String getAttackerOutcome() {
+        return attackerOutcome;
+    }
+
+    public void setAttackerOutcome(String attackerOutcome) {
+        this.attackerOutcome = attackerOutcome;
     }
 
     public String getRegion() {

@@ -1,4 +1,4 @@
-package com.example.adaanahmed.westerosatwar.profile_screen;
+package com.example.adaanahmed.westerosatwar.search_screen;
 
 import com.example.adaanahmed.westerosatwar.base.BasePresenter;
 import com.example.adaanahmed.westerosatwar.base.BaseView;
@@ -12,15 +12,14 @@ import java.util.ArrayList;
  */
 
 
-class ProfileScreenContract {
+public class SearchScreenContract {
+    interface View extends BaseView {
+        void setData(ArrayList<SearchModel> searchModels);
+    }
 
     interface Presenter extends BasePresenter<View> {
+        void startKingProfileActivity(String kingName);
 
+        void fetchingNames(String str);
     }
-
-    interface View extends BaseView {
-        void setData(ArrayList<ProfileScreenListModel> profileScreenListModels);
-        void setTitle(String title);
-    }
-
 }

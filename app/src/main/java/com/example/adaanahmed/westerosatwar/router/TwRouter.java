@@ -3,12 +3,12 @@ package com.example.adaanahmed.westerosatwar.router;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.example.adaanahmed.westerosatwar.home_screen.HomeScreenActivity;
 import com.example.adaanahmed.westerosatwar.profile_screen.ProfileScreenActivity;
 import com.example.adaanahmed.westerosatwar.router.models.HomeScreenRouterModel;
 import com.example.adaanahmed.westerosatwar.router.models.ProfileScreenRouterModel;
+import com.example.adaanahmed.westerosatwar.search_screen.SearchScreenActivity;
 
 /**
  * Author  : Adnaan 'Zohran' Ahmed
@@ -30,6 +30,11 @@ public class TwRouter {
     public static void startProfileScreenActivity(@NonNull Context context, @NonNull ProfileScreenRouterModel model) {
         Intent intent = new Intent(context, ProfileScreenActivity.class);
         intent.putExtra(KEY_DATA, model);
+        context.startActivity(intent);
+    }
+
+    public static void startSearchScreenActivity(@NonNull Context context) {
+        Intent intent = new Intent(context, SearchScreenActivity.class);
         context.startActivity(intent);
     }
 

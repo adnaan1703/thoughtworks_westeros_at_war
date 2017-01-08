@@ -13,4 +13,5 @@
     <string name="battle_won">Battle Won</string>
     <string name="battle_lost">Battle Lost</string>
     <string name="year">Year %d</string>
+    <string name="search_name">Search name</string>
 </resources>

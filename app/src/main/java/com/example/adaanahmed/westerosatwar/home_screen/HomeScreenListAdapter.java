@@ -10,13 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.example.adaanahmed.westerosatwar.ProfileImageMapper;
+import com.example.adaanahmed.westerosatwar.utils.ProfileImageMapper;
 import com.example.adaanahmed.westerosatwar.R;
 import com.example.adaanahmed.westerosatwar.UIWidget.ProximaTextView;
 import com.example.adaanahmed.westerosatwar.dbUtil.models.King;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Author  : Adnaan 'Zohran' Ahmed
@@ -170,8 +169,7 @@ class HomeScreenListAdapter extends RecyclerView.Adapter<HomeScreenListAdapter.V
         @Override
         void updateView(King king) {
             Context context = itemView.getContext();
-            Random random = new Random();
-            int imageId = context.getResources().getIdentifier(PROFILE_PHOTOS[random.nextInt(50)],
+            int imageId = context.getResources().getIdentifier(PROFILE_PHOTOS[king.getId()],
                     "drawable", context.getPackageName());
             imageView.setImageDrawable(ContextCompat.getDrawable(context, imageId));
             title.setText(king.getName());

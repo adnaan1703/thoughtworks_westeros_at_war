@@ -16,6 +16,7 @@ public class ProfileScreenListModel {
     static final int BATTLE_LOST_CONTENT = 4;
 
     private int type;
+    private int kingId;
     private String name;
     private int year;
     private String kingName;
@@ -25,6 +26,14 @@ public class ProfileScreenListModel {
     private int count;
 
     public ProfileScreenListModel() {
+    }
+
+    public int getKingId() {
+        return kingId;
+    }
+
+    public void setKingId(int kingId) {
+        this.kingId = kingId;
     }
 
     public int getCount() {

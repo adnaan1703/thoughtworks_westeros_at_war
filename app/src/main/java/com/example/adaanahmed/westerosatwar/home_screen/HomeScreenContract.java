@@ -20,7 +20,7 @@ class HomeScreenContract {
 
         void fetchData();
 
-        void startSearchFragment();
+        void startSearchActivity();
 
         void startFilterFragment();
 

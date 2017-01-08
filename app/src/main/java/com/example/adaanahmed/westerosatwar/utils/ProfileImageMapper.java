@@ -1,4 +1,4 @@
-package com.example.adaanahmed.westerosatwar;
+package com.example.adaanahmed.westerosatwar.utils;
 
 /**
  * Author  : Adnaan 'Zohran' Ahmed
