@@ -1,6 +1,7 @@
 package com.example.adaanahmed.westerosatwar.dbUtil.models;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 
 /**
@@ -13,7 +14,7 @@ import io.realm.RealmObject;
 public class Battle extends RealmObject {
 
     private long year;
-    private String name;
+    @PrimaryKey private String name;
     private String attackerKing;
     private String defenderKing;
     private String battleType;

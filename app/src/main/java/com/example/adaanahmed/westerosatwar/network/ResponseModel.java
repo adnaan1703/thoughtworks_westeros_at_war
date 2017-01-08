@@ -1,15 +1,16 @@
 
 package com.example.adaanahmed.westerosatwar.network;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import org.json.JSONObject;
-
 @SuppressWarnings("unused")
-public class ResponseModel {
+public class ResponseModel implements Parcelable{
 
     @SerializedName("name")
     @Expose
@@ -86,6 +87,80 @@ public class ResponseModel {
     @SerializedName("note")
     @Expose
     private String note;
+
+    protected ResponseModel(Parcel in) {
+        name = in.readString();
+        year = in.readInt();
+        battleNumber = in.readInt();
+        attackerKing = in.readString();
+        defenderKing = in.readString();
+        attacker1 = in.readString();
+        attacker2 = in.readString();
+        attacker3 = in.readString();
+        attacker4 = in.readString();
+        defender1 = in.readString();
+        defender2 = in.readString();
+        defender3 = in.readString();
+        defender4 = in.readString();
+        attackerOutcome = in.readString();
+        battleType = in.readString();
+        majorDeath = in.readInt();
+        majorCapture = in.readInt();
+        attackerSize = in.readString();
+        defenderSize = in.readString();
+        attackerCommander = in.readString();
+        defenderCommander = in.readString();
+        summer = in.readString();
+        location = in.readString();
+        region = in.readString();
+        note = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeInt(year);
+        dest.writeInt(battleNumber);
+        dest.writeString(attackerKing);
+        dest.writeString(defenderKing);
+        dest.writeString(attacker1);
+        dest.writeString(attacker2);
+        dest.writeString(attacker3);
+        dest.writeString(attacker4);
+        dest.writeString(defender1);
+        dest.writeString(defender2);
+        dest.writeString(defender3);
+        dest.writeString(defender4);
+        dest.writeString(attackerOutcome);
+        dest.writeString(battleType);
+        dest.writeInt(majorDeath);
+        dest.writeInt(majorCapture);
+        dest.writeString(attackerSize);
+        dest.writeString(defenderSize);
+        dest.writeString(attackerCommander);
+        dest.writeString(defenderCommander);
+        dest.writeString(summer);
+        dest.writeString(location);
+        dest.writeString(region);
+        dest.writeString(note);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<ResponseModel> CREATOR = new Creator<ResponseModel>() {
+        @Override
+        public ResponseModel createFromParcel(Parcel in) {
+            return new ResponseModel(in);
+        }
+
+        @Override
+        public ResponseModel[] newArray(int size) {
+            return new ResponseModel[size];
+        }
+    };
 
     public String getName() {
         return name;

@@ -2,6 +2,7 @@ package com.example.adaanahmed.westerosatwar.dbUtil.models;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Author  : Adnaan 'Zohran' Ahmed
@@ -12,8 +13,8 @@ import io.realm.RealmObject;
 
 public class King extends RealmObject {
 
-    private long rating;
-    private String name;
+    private long rating = 400;
+    @PrimaryKey private String name;
     private String strength;
     private String battleType;
     private RealmList<Battle> battlesWon = new RealmList<>();

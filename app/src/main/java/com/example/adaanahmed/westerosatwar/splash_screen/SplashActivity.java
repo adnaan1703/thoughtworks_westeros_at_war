@@ -9,9 +9,6 @@ import android.widget.ProgressBar;
 import com.example.adaanahmed.westerosatwar.R;
 import com.example.adaanahmed.westerosatwar.UIWidget.ProximaTextView;
 import com.example.adaanahmed.westerosatwar.base.BaseActivity;
-import com.example.adaanahmed.westerosatwar.network.ResponseModel;
-
-import java.util.ArrayList;
 
 public class SplashActivity extends BaseActivity implements SplashScreenContract.View {
 
@@ -56,15 +53,25 @@ public class SplashActivity extends BaseActivity implements SplashScreenContract
     }
 
     @Override
-    public void setDataSuccess(ArrayList<ResponseModel> responseModels) {
-//        presenter.navigateToHomeScreen();
-        showToast(responseModels.get(0).toString());
+    public void onDataStoreSuccess() {
+        presenter.navigateToHomeScreen();
     }
 
     @Override
-    public void setDataFailure(String string) {
-        Log.e(this.getClass().getName(), string);
-        showToast(string);
+    public void onDataStoreFailure(String msg) {
+        showToast(msg, true);
+        Log.e(this.getClass().getName(), msg);
+    }
+
+    @Override
+    public void onDataFetchSuccess() {
+        proximaTextView.setText(R.string.processing_data);
+    }
+
+    @Override
+    public void onDataFetchFailure(String msg) {
+        Log.e(this.getClass().getName(), msg);
+        showToast(msg);
         progressBar.setVisibility(View.INVISIBLE);
         proximaTextView.setText(R.string.check_internet);
     }

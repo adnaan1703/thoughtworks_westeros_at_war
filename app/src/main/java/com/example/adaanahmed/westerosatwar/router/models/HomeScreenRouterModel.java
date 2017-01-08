@@ -3,6 +3,8 @@ package com.example.adaanahmed.westerosatwar.router.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.adaanahmed.westerosatwar.network.ResponseModel;
+
 /**
  * Author  : Adnaan 'Zohran' Ahmed
  * Date    : 08 Jan 2017.
@@ -12,14 +14,24 @@ import android.os.Parcelable;
 
 public class HomeScreenRouterModel implements Parcelable {
 
-    String data;
+    private boolean wasLoadSuccessful;
 
-    public HomeScreenRouterModel(String data) {
-        this.data = data;
+    public HomeScreenRouterModel(boolean wasLoadSuccessful) {
+        this.wasLoadSuccessful = wasLoadSuccessful;
     }
 
     protected HomeScreenRouterModel(Parcel in) {
-        data = in.readString();
+        wasLoadSuccessful = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (wasLoadSuccessful ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<HomeScreenRouterModel> CREATOR = new Creator<HomeScreenRouterModel>() {
@@ -34,21 +46,7 @@ public class HomeScreenRouterModel implements Parcelable {
         }
     };
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(data);
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
+    public boolean isWasLoadSuccessful() {
+        return wasLoadSuccessful;
     }
 }

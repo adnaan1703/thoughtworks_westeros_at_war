@@ -2,9 +2,6 @@ package com.example.adaanahmed.westerosatwar.splash_screen;
 
 import com.example.adaanahmed.westerosatwar.base.BasePresenter;
 import com.example.adaanahmed.westerosatwar.base.BaseView;
-import com.example.adaanahmed.westerosatwar.network.ResponseModel;
-
-import java.util.ArrayList;
 
 /**
  * Author  : Adnaan 'Zohran' Ahmed
@@ -19,7 +16,9 @@ class SplashScreenContract {
     }
 
     interface View extends BaseView {
-        void setDataSuccess(ArrayList<ResponseModel> responseModels);
-        void setDataFailure(String string);
+        void onDataFetchSuccess();
+        void onDataFetchFailure(String msg);
+        void onDataStoreSuccess();
+        void onDataStoreFailure(String msg);
     }
 }
