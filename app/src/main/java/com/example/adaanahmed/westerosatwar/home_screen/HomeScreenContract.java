@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 class HomeScreenContract {
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter<View> {
         int ROW_ITEMS_COUNT = 10;
 
         void fetchData();

@@ -2,7 +2,9 @@ package com.example.adaanahmed.westerosatwar.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 /**
@@ -36,6 +38,17 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    protected void setToolbar(Toolbar toolbar) {
+        if (null != toolbar) {
+            setSupportActionBar(toolbar);
+            ActionBar actionBar = getSupportActionBar();
+            if (null != actionBar) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayShowTitleEnabled(false);
+            }
+        }
+    }
+
     protected void showToast(String string, boolean isLong) {
         int durations = Toast.LENGTH_SHORT;
         if (isLong) {
@@ -52,4 +65,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void handleIntent();
 
     protected abstract BasePresenter getPresenter();
+
+    protected abstract void resetPresenter();
 }

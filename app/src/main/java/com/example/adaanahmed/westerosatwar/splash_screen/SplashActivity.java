@@ -41,8 +41,21 @@ public class SplashActivity extends BaseActivity implements SplashScreenContract
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (presenter != null && presenter.getView() == null) {
+            presenter.setView(this);
+        }
+    }
+
+    @Override
     protected BasePresenter getPresenter() {
         return presenter;
+    }
+
+    @Override
+    protected void resetPresenter() {
+        presenter = null;
     }
 
     @Override
@@ -53,7 +66,8 @@ public class SplashActivity extends BaseActivity implements SplashScreenContract
 
     @Override
     public void onDataStoreSuccess() {
-        presenter.navigateToHomeScreen();
+        if (null != presenter)
+            presenter.navigateToHomeScreen();
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.example.adaanahmed.westerosatwar.ProfileImageMapper;
 import com.example.adaanahmed.westerosatwar.R;
 import com.example.adaanahmed.westerosatwar.UIWidget.ProximaTextView;
 import com.example.adaanahmed.westerosatwar.dbUtil.models.King;

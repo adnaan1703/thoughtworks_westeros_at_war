@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_profile_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    tools:context="com.example.adaanahmed.westerosatwar.profile_screen.ProfileScreenActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/profile_screen_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.example.adaanahmed.westerosatwar.UIWidget.ProximaTextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white_87"
+            android:textSize="20sp"
+            tools:visibility="visible"
+            android:visibility="invisible"
+            app:proxima_font="proxima_bold"
+            tools:text="Adnaan Zohran Ahmed" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/profile_Screen_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

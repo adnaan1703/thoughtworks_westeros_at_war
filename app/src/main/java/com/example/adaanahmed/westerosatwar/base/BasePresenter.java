@@ -7,7 +7,9 @@ package com.example.adaanahmed.westerosatwar.base;
  */
 
 
-public interface BasePresenter {
+public interface BasePresenter<V extends BaseView> {
     void start();
     void stop();
+    void setView(V view);
+    V getView();
 }

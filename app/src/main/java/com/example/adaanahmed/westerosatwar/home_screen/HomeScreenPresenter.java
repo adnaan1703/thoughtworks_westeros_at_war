@@ -3,6 +3,8 @@ package com.example.adaanahmed.westerosatwar.home_screen;
 import android.support.annotation.NonNull;
 
 import com.example.adaanahmed.westerosatwar.dbUtil.models.King;
+import com.example.adaanahmed.westerosatwar.router.TwRouter;
+import com.example.adaanahmed.westerosatwar.router.models.ProfileScreenRouterModel;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -49,17 +51,29 @@ class HomeScreenPresenter implements HomeScreenContract.Presenter {
     }
 
     @Override
+    public void setView(HomeScreenContract.View view) {
+        this.view = new WeakReference<>(view);
+    }
+
+    @Override
+    public HomeScreenContract.View getView() {
+        return view.get();
+    }
+
+    @Override
     public void fetchData() {
         ArrayList<King> data = new ArrayList<>();
         for (int position = counter; position < counter + ROW_ITEMS_COUNT && position < results.size(); position++) {
             data.add(results.get(position));
         }
 
-        if (counter + ROW_ITEMS_COUNT >= results.size()) {
-            counter = results.size();
-            view.get().updateList(data, true);
-        } else {
-            view.get().updateList(data, false);
+        if (null != view.get()) {
+            if (counter + ROW_ITEMS_COUNT >= results.size()) {
+                counter = results.size();
+                view.get().updateList(data, true);
+            } else {
+                view.get().updateList(data, false);
+            }
         }
     }
 
@@ -74,8 +88,11 @@ class HomeScreenPresenter implements HomeScreenContract.Presenter {
     }
 
     @Override
-    public void startKingProfileActivity(King king) {
-
+    public void startKingProfileActivity(@NonNull King king) {
+        if (null != view.get()) {
+            ProfileScreenRouterModel model = new ProfileScreenRouterModel(king.getName());
+            TwRouter.startProfileScreenActivity(view.get().getContext(), model);
+        }
     }
 
     @Override

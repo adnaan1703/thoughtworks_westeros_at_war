@@ -42,6 +42,14 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenContra
         initViews();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (presenter != null && presenter.getView() == null) {
+            presenter.setView(this);
+        }
+    }
+
     private void initViews() {
         presenter = new HomeScreenPresenter(this);
         searchButton.setOnClickListener(this);
@@ -72,7 +80,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenContra
             model = intent.getParcelableExtra(TwRouter.KEY_DATA);
         }
 
-        if (!model.isWasLoadSuccessful()) {
+        if (model != null && !model.isWasLoadSuccessful()) {
             Log.d(this.getClass().getName(), "models not loaded successfully");
         }
     }
@@ -80,6 +88,11 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenContra
     @Override
     protected BasePresenter getPresenter() {
         return presenter;
+    }
+
+    @Override
+    protected void resetPresenter() {
+        presenter = null;
     }
 
     @Override
@@ -110,12 +123,14 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenContra
 
     @Override
     public void onKingsItemClick(King king) {
-        presenter.startKingProfileActivity(king);
+        if (null != presenter)
+            presenter.startKingProfileActivity(king);
     }
 
     @Override
     public void loadMore() {
-        presenter.fetchData();
+        if (null != presenter)
+            presenter.fetchData();
     }
 
     @Override

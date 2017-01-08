@@ -1,4 +1,4 @@
-package com.example.adaanahmed.westerosatwar.home_screen;
+package com.example.adaanahmed.westerosatwar;
 
 /**
  * Author  : Adnaan 'Zohran' Ahmed
@@ -7,7 +7,7 @@ package com.example.adaanahmed.westerosatwar.home_screen;
  */
 
 
-interface ProfileImageMapper {
+public interface ProfileImageMapper {
     String PROFILE_PHOTOS[] = {
             "ant_eater",
             "badger",

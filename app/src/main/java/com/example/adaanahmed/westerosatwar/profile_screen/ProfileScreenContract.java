@@ -1,7 +1,9 @@
-package com.example.adaanahmed.westerosatwar.splash_screen;
+package com.example.adaanahmed.westerosatwar.profile_screen;
 
 import com.example.adaanahmed.westerosatwar.base.BasePresenter;
 import com.example.adaanahmed.westerosatwar.base.BaseView;
+
+import java.util.ArrayList;
 
 /**
  * Author  : Adnaan 'Zohran' Ahmed
@@ -10,15 +12,14 @@ import com.example.adaanahmed.westerosatwar.base.BaseView;
  */
 
 
-class SplashScreenContract {
+class ProfileScreenContract {
+
     interface Presenter extends BasePresenter<View> {
-        void navigateToHomeScreen();
+
     }
 
     interface View extends BaseView {
-        void onDataFetchSuccess();
-        void onDataFetchFailure(String msg);
-        void onDataStoreSuccess();
-        void onDataStoreFailure(String msg);
+        void setData(ArrayList<ProfileScreenListModel> profileScreenListModels);
     }
+
 }

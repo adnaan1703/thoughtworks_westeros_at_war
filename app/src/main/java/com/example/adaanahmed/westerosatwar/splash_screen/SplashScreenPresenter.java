@@ -44,7 +44,8 @@ class SplashScreenPresenter implements SplashScreenContract.Presenter, Callback<
     @Override
     public void navigateToHomeScreen() {
         HomeScreenRouterModel model = new HomeScreenRouterModel(wasLoadSuccessful);
-        TwRouter.startHomeScreenActivity(view.get().getContext(), model);
+        if (null != view.get())
+            TwRouter.startHomeScreenActivity(view.get().getContext(), model);
     }
 
     @Override
@@ -57,7 +58,20 @@ class SplashScreenPresenter implements SplashScreenContract.Presenter, Callback<
     }
 
     @Override
+    public void setView(SplashScreenContract.View view) {
+        this.view = new WeakReference<>(view);
+    }
+
+    @Override
+    public SplashScreenContract.View getView() {
+        return view.get();
+    }
+
+    @Override
     public void onResponse(Response<ArrayList<ResponseModel>> response, Retrofit retrofit) {
+        if (view.get() == null)
+            return;
+
         if (null != response) {
             view.get().onDataFetchSuccess();
             storeDataInDb(response.body());
@@ -69,7 +83,8 @@ class SplashScreenPresenter implements SplashScreenContract.Presenter, Callback<
 
     @Override
     public void onFailure(Throwable t) {
-        view.get().onDataFetchFailure(t.toString());
+        if (null != view.get())
+            view.get().onDataFetchFailure(t.toString());
     }
 
     private void storeDataInDb(@NonNull final ArrayList<ResponseModel> responseModels) {
@@ -78,6 +93,10 @@ class SplashScreenPresenter implements SplashScreenContract.Presenter, Callback<
             public void execute(Realm realm) {
 
                 for (ResponseModel response : responseModels) {
+
+                    if (realm.where(Battle.class).equalTo("name", response.getName()).count() > 0)
+                        continue;
+
                     Battle battle = insertBattleDocument(response, realm);
                     insertUpdateKingDocument(response, battle, realm);
                 }
@@ -85,12 +104,14 @@ class SplashScreenPresenter implements SplashScreenContract.Presenter, Callback<
         }, new Realm.Transaction.OnSuccess() {
             @Override
             public void onSuccess() {
-                view.get().onDataStoreSuccess();
+                if (null != view.get())
+                    view.get().onDataStoreSuccess();
             }
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                view.get().onDataStoreFailure(error.toString());
+                if (null != view.get())
+                    view.get().onDataStoreFailure(error.toString());
             }
         });
     }

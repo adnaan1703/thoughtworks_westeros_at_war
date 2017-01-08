@@ -31,6 +31,12 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".profile_screen.ProfileScreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:parentActivityName=".home_screen.HomeScreenActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
