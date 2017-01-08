@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import com.example.adaanahmed.westerosatwar.R;
 import com.example.adaanahmed.westerosatwar.UIWidget.ProximaTextView;
 import com.example.adaanahmed.westerosatwar.base.BaseActivity;
+import com.example.adaanahmed.westerosatwar.base.BasePresenter;
 
 public class SplashActivity extends BaseActivity implements SplashScreenContract.View {
 
@@ -35,15 +36,13 @@ public class SplashActivity extends BaseActivity implements SplashScreenContract
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        presenter.start();
-
+    protected void handleIntent() {
+        // no intent to handle
     }
 
     @Override
-    protected void handleIntent() {
-        // no intent to handle
+    protected BasePresenter getPresenter() {
+        return presenter;
     }
 
     @Override

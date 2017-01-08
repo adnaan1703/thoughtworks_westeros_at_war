@@ -20,6 +20,22 @@ public abstract class BaseActivity extends AppCompatActivity {
         handleIntent();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (null != getPresenter()) {
+            getPresenter().start();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (null != getPresenter()) {
+            getPresenter().stop();
+        }
+    }
+
     protected void showToast(String string, boolean isLong) {
         int durations = Toast.LENGTH_SHORT;
         if (isLong) {
@@ -34,4 +50,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected abstract void handleIntent();
+
+    protected abstract BasePresenter getPresenter();
 }

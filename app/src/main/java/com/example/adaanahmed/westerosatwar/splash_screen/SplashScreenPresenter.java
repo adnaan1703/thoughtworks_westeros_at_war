@@ -29,6 +29,7 @@ class SplashScreenPresenter implements SplashScreenContract.Presenter, Callback<
 
     private WeakReference<SplashScreenContract.View> view;
     private boolean wasLoadSuccessful;
+    long count1, count2;
 
     SplashScreenPresenter(@NonNull SplashScreenContract.View view) {
         this.view = new WeakReference<>(view);
@@ -48,8 +49,11 @@ class SplashScreenPresenter implements SplashScreenContract.Presenter, Callback<
 
     @Override
     public void start() {
-        Realm.init(view.get().getContext());
         fetchData();
+    }
+
+    @Override
+    public void stop() {
     }
 
     @Override
@@ -77,11 +81,15 @@ class SplashScreenPresenter implements SplashScreenContract.Presenter, Callback<
                     Battle battle = insertBattleDocument(response, realm);
                     insertUpdateKingDocument(response, battle, realm);
                 }
+
+                count1 = realm.where(King.class).count();
+                count2 = realm.where(Battle.class).count();
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
             public void onSuccess() {
                 view.get().onDataStoreSuccess();
+                view.get().onDataStoreFailure(" kings -> " + count1 + " battles -> " + count2);
             }
         }, new Realm.Transaction.OnError() {
             @Override

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:foreground="?attr/selectableItemBackground"
+    android:padding="@dimen/margin_16">
+
+    <ImageView
+        android:id="@+id/home_screen_list_item_image"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/bear"
+        tools:ignore="ContentDescription" />
+
+    <com.example.adaanahmed.westerosatwar.UIWidget.ProximaTextView
+        android:id="@+id/home_screen_list_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/home_screen_list_item_image"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="6dp"
+        android:layout_toEndOf="@id/home_screen_list_item_image"
+        android:textColor="@color/white_87"
+        android:textSize="16sp"
+        app:proxima_font="proxima_regular"
+        tools:text="Adnaan Zohran Ahmed" />
+
+    <com.example.adaanahmed.westerosatwar.UIWidget.ProximaTextView
+        android:id="@+id/home_screen_list_item_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/home_screen_list_item_title"
+        android:layout_below="@id/home_screen_list_item_title"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/home_screen_list_item_image"
+        android:textColor="@color/white_54"
+        android:textSize="12sp"
+        app:proxima_font="proxima_regular"
+        tools:text="Battle Strength: Ambush" />
+
+    <com.example.adaanahmed.westerosatwar.UIWidget.ProximaTextView
+        android:id="@+id/home_screen_list_item_rating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/home_screen_list_item_subtitle"
+        android:layout_marginStart="4dp"
+        android:layout_toEndOf="@id/home_screen_list_item_subtitle"
+        android:ellipsize="end"
+        android:gravity="end"
+        android:maxLines="1"
+        android:textColor="@color/white_54"
+        android:textSize="12sp"
+        app:proxima_font="proxima_regular"
+        tools:text="Rating: 4342" />
+
+</RelativeLayout>

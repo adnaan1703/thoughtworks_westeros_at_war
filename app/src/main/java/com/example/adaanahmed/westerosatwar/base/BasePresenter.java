@@ -9,4 +9,5 @@ package com.example.adaanahmed.westerosatwar.base;
 
 public interface BasePresenter {
     void start();
+    void stop();
 }
